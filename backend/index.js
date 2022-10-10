@@ -1,6 +1,6 @@
 const express = require("express")
 const app = express()
-const port = 4040 
+const port = 4040 //utilizei essa porta pois não sei como será feito a hospedagem
 const path = require("path")
 const userRout = require('./rotas')
 
@@ -9,7 +9,7 @@ const basePath = path.join(__dirname, 'templates')
 app.use('/rotas', userRout)
 
 app.get('/', (req, res) => {
-    res.sendFile(`${basePath}/index.html`)
+    res.sendFile(`${basePath}/index.html`) //url home
 })
 
 app.listen(port, () => {
