@@ -8,6 +8,7 @@ const basePath = path.join(__dirname, 'templates')
 
 app.use('/rotas', userRout)
 
+
 app.get('/', (req, res) => {
     res.sendFile(`${basePath}/index.html`) //url home
 })
