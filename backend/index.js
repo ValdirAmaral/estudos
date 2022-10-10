@@ -1,6 +1,6 @@
 const express = require("express")
 const app = express()
-const port = 4040 //utilizei essa porta pois não sei como será feito a hospedagem
+const port = process.env.PORT || 4040 
 const path = require("path")
 const userRout = require('./rotas')
 
