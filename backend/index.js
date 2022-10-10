@@ -12,6 +12,6 @@ app.get('/', (req, res) => {
     res.sendFile(`${basePath}/index.html`)
 })
 
-app.liste(port, () => {
+app.listen(port, () => {
     console.log(`App rodando na porta ${port}`)
 })
