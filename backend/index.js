@@ -10,7 +10,7 @@ app.use('/rotas', userRout)
 
 
 app.get('/', (req, res) => {
-    res.sendFile(`${basePath}/index.html`) //url home
+    res.sendFile(`${basePath}/index.html`) //url home 
 })
 
 app.listen(port, () => {
