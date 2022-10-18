@@ -13,13 +13,13 @@ module.exports = class TaskController {
     */
 
 
-     showTasks(req, res) { //retornando json
+     static showTasks(req, res) { //retornando json
         res.json({
             teste: 'MIAU!'
         })
      }
 
-      homePage(req, res) {
+     static homePage(req, res) {
         res.sendFile(path.resolve('views', 'tasks', 'home.html'))
      }
 
