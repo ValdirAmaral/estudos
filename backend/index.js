@@ -4,6 +4,7 @@ const app = express()
 const Task = require('./models/Task.js') //invocação do model
 const taskRouters = require('./routes/taskRoutes.js') //importar o router
 const cors = require('cors')
+const port = process.env.PORT || 4040
 
 /*Middleware*/
 app.use(cors())
@@ -13,7 +14,7 @@ app.use(express.static('./views/tasks'))
 /*sincronizar os models com o db e porta*/
 //conn.sync()
   //  .then(() => {
-        app.listen(3000)
+        app.listen(port)
     //    console.log('conecatado na porta 3000')
     //}).catch((err) => console.log(err))
 
