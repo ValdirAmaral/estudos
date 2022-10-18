@@ -1,24 +1,28 @@
 {
-  "name": "backend",
+  "name": "backend_mvc",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "nodemon ./index.js localhost 3000"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ValdirAmaral/estudos.git#main"
+    "url": "git+https://github.com/ValdirAmaral/backend_MVC.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ValdirAmaral/estudos/issues"
+    "url": "https://github.com/ValdirAmaral/backend_MVC/issues"
   },
-  "homepage": "https://github.com/ValdirAmaral/estudos/tree/main#readme",
+  "homepage": "https://github.com/ValdirAmaral/backend_MVC#readme",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "express-handlebars": "^6.0.6",
+    "mysql2": "^2.3.3",
+    "nodemon": "^2.0.20",
+    "sequelize": "^6.25.1"
   }
 }

@@ -1,20 +1,19 @@
-const express = require("express")
+const express = require('express')
 const app = express()
-const port = process.env.PORT || 4040 
-const path = require("path")
-const userRout = require('./rotas')
+const conn = require('./db/conn') //invocacao do db
+const Task = require('./models/Task') //invocação do model
+const taskRouters = require('./routes/taskRoutes') //importar o router
 const cors = require('cors')
 
-const basePath = path.join(__dirname, 'templates')
-
+/*Middleware*/
 app.use(cors())
-app.use('/rotas', userRout)
+app.use('/tasks', taskRouters)
+app.use(express.static('./views/tasks'))
 
+/*sincronizar os models com o db e porta*/
+conn.sync()
+    .then(() => {
+        app.listen(3000)
+        console.log('conecatado na porta 3000')
+    }).catch((err) => console.log(err))
 
-app.get('/', (req, res) => {
-    res.sendFile(`${basePath}/index.html`) //url home 
-})
-
-app.listen(port, () => {
-    console.log(`App rodando na porta ${port}`)
-})
