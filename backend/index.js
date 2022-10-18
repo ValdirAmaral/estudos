@@ -1,8 +1,8 @@
 const express = require('express')
 const app = express()
-const conn = require('./db/conn') //invocacao do db
-const Task = require('./models/Task') //invocação do model
-const taskRouters = require('./routes/taskRoutes') //importar o router
+const conn = require('./db/conn.js') //invocacao do db
+const Task = require('./models/Task.js') //invocação do model
+const taskRouters = require('./routes/taskRoutes.js') //importar o router
 const cors = require('cors')
 
 /*Middleware*/
