@@ -2,6 +2,7 @@
 const { Sequelize } = require('sequelize')
 const sequelize = new Sequelize('users', 'root', '1234trocar', {
     host: 'tcp-mo2.mogenius.io',
+    port:'10720',
     dialect: 'mysql'
 })
 
