@@ -3,7 +3,7 @@ const router = express.Router()
 
 const TaskController = require('../controllers/taskController')
 
-router.get('/', TaskController.showTasks)
+router.get('/hello', TaskController.showTasks)
 
 
 module.exports = router
