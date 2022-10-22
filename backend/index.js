@@ -6,15 +6,17 @@ const taskRouters = require('./routes/taskRoutes.js') //importar o router
 const cors = require('cors')
 const port = process.env.PORT || 4040
 
+
 /*Middleware*/
 app.use(cors())
 app.use('/tasks', taskRouters)
 app.use(express.static('./views/tasks'))
 
+
 /*sincronizar os models com o db e porta*/
 conn.sync()
-    .then(() => {
+    .then(async () => {
         app.listen(port)
         console.log(`conecatado na porta ${port}`)
-    }).catch((err) => console.log(err))
+  }).catch((err) => console.log(err))
 
