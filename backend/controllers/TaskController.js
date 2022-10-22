@@ -5,6 +5,7 @@ const path = require('path')
 module.exports = class TaskController { 
     
 
+
      static async addUser(req, res) { //add user
 
          const createUser = {

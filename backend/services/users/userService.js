@@ -1,18 +1,12 @@
-/*
-import users from "../models/Task.js"
+const User = require('../../models/Users.js') //invocação do model
 
-function addClient(req, res) {
-    users.create({
-        password: '1234',
-        username: 'teste',
-        name: 'teste1',
-        email: 'teste@teste.com'
-    }).then((result) => res.json(result));
+module.exports = class UserController {
+
+  static async findUser(req, res) {
+   
+   await User.findOne({where: {username: 'zezin'}} && {where: {password: '1234'}}).then((result) => res.json(result))
   }
-
-  export default {addClient}
-*/
-
+}
 
 
 
