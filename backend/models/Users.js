@@ -2,7 +2,7 @@
 const { DataTypes } = require('sequelize')
 const db = require('../db/conn')
 
-const Task = db.define('users', {
+const User = db.define('users', {
 
     id: {
         type: DataTypes.INTEGER,
@@ -34,5 +34,5 @@ const Task = db.define('users', {
 
 })
 
-module.exports = Task
+module.exports = User
 
