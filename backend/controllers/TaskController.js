@@ -1,8 +1,6 @@
 const User = require('../models/Users.js')
 const path = require('path')
 
-
-
 //exportar as classes das rotas
 module.exports = class TaskController { 
     
