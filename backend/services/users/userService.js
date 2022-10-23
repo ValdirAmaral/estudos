@@ -2,13 +2,33 @@ const User = require('../../models/Users.js') //invocação do model
 
 module.exports = class UserController {
 
-  static async findUser(req, res) { //find user
-   
+   //login
+  static async loginUser(req, res) { 
+
+  const user = await User.findOne({
+
+      attributes: ['id', 'name', 'username', 'email', 'password'],
+      where: {
+         username: req.body.usarname,
+         password: req.body.password,
+      }
+   })
+
+}
+
+
+
+
+
+/*
    await User.findOne({where: {username: 'zezin'}} && {where: {password: '1234'}}).then((result) => res.json(result))
   }
+*/
 
 
-  static async addUser(req, res) { //add user
+
+  //add user
+  static async addUser(req, res) { 
 
     const createUser = {
 

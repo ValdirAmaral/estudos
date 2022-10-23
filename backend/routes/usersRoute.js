@@ -3,6 +3,6 @@ const router = express.Router()
 const UserController = require('../services/users/userService.js')
 
 router.post('/add', UserController.addUser)
-router.get('/find', UserController.findUser)
+router.post('/login', UserController.loginUser)
 
 module.exports = router
