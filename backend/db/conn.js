@@ -15,13 +15,6 @@ const sequelize = new Sequelize (dbName, dbUser, dbPassword, {
     port: dbPort,
 })
 
-/*
-const sequelize = new Sequelize('tasks', 'root', '1234trocar', {
-    host: 'tcp-mo2.mogenius.io',
-    port:'10720',
-    dialect: 'mysql'
-})
-*/
 try {
 
     sequelize.authenticate()

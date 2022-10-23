@@ -1,7 +1,5 @@
 const express = require('express')
-
 const bodyParser = require('body-parser');
-
 const app = express()
 const conn = require('./db/conn.js') //invocacao do db
 //const User = require('./models/Users.js') //invocação do model
@@ -11,12 +9,13 @@ const cors = require('cors')
 const port = process.env.PORT || 4040
 
 /*Middleware*/
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors())
 app.use('/', taskRouters, userRoutes)
 app.use(express.static('./views/tasks'))
 app.use(express.json())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+
 
 /*sincronizar os models com o db e porta*/
 conn.sync()

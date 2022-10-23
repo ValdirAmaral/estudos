@@ -4,26 +4,6 @@ const path = require('path')
 //exportar as classes das rotas
 module.exports = class TaskController { 
     
-
-
-     static async addUser(req, res) { //add user
-
-         const createUser = {
-
-            name: req.body.name,
-            username: req.body.username,
-            email: req.body.email,
-            password: req.body.password,
-         }
-
-         try {       
-            await User.create(createUser)
-
-         } catch (error) {console.log(error)}
-   }
-
-
-
      static showTasks(req, res) { //retornando json fixo
         res.json({
             teste: 'MIAU!'
