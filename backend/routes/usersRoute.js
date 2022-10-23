@@ -1,8 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const UserController = require('../services/users/userService.js')
+const UserController = require('../controllers/UserController')
+const telaUser = require('../controllers/telas/Users')
 
-router.post('/add', UserController.addUser)
-router.post('/login', UserController.loginUser)
+router.post('/user/add', UserController.createUser)
+router.post('/user/login', UserController.login)
+router.post('/logintest', telaUser.loginpage)
 
 module.exports = router

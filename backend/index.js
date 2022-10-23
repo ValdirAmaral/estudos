@@ -2,7 +2,6 @@ const express = require('express')
 const bodyParser = require('body-parser');
 const app = express()
 const conn = require('./db/conn.js') //invocacao do db
-//const User = require('./models/Users.js') //invocação do model
 const taskRouters = require('./routes/taskRoutes.js') //importar o router
 const userRoutes = require('./routes/usersRoute.js')
 const cors = require('cors')
@@ -15,6 +14,8 @@ app.use(cors())
 app.use('/', taskRouters, userRoutes)
 app.use(express.static('./views/tasks'))
 app.use(express.json())
+app.set('view engine', 'html')
+app.engine('html', require('ejs').renderFile)
 
 
 /*sincronizar os models com o db e porta*/

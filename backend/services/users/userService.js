@@ -24,7 +24,32 @@ module.exports = class UserController {
    await User.findOne({where: {username: 'zezin'}} && {where: {password: '1234'}}).then((result) => res.json(result))
   }
 */
+static async createUser(name,username,password,email) { 
 
+   const createUser = {
+       name,
+       username,
+       email,
+       password,
+   }
+
+   try {       
+      await User.create(createUser)
+
+   } catch (error) {console.log(error)}
+}
+
+static async login(username,password) { 
+
+   const user = await User.findOne({
+      attributes: ['id', 'name', 'username', 'email'],
+      where: {
+         username: username,
+         password: password,
+      }
+   })
+   return user;
+}
 
 
   //add user
