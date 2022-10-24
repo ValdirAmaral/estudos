@@ -1,9 +1,33 @@
 const userService = require("../services/users/userService");
-const path = require("path");
 const User = require("../models/Users");
+const bcrypt = require('bcrypt')
 
 //exportar as classes das rotas
 module.exports = class UserController {
+
+  static async createUser(req, res) {
+
+    var dados = req.body
+    
+    dados.password = await bcrypt.hash(dados.password, 8)
+
+    await User.create(dados)
+      .then(() => {
+        return res.json({
+          erro: false,
+          message: "Usuário cadastrado com sucesso"
+        })
+      }).catch(() => {
+        return res.status(400).json({
+          erro: true,
+          message: "Erro: Usuário não cadastrado com sucesso"
+        })
+      })
+      
+ }
+
+
+  /*
   static createUser(req, res) {
     //retornando json fixo
     const { name, username, email, password } = req.body;
@@ -11,7 +35,10 @@ module.exports = class UserController {
     return res.json({
       status: "mimii,",
     });
-  }
+  }*/
+
+
+
 
   static async login(req, res) {
     //retornando json fixo
@@ -29,11 +56,17 @@ module.exports = class UserController {
   }
 
   static async showUsers(req, res) {
-   
+
     const users = await User.findAll({
       attributes: ['username', 'name', 'email']
     })
 
-    return res.json({users})
+    return res.json({ users })
   }
+
+
+
+
+
 };
+

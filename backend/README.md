@@ -1,10 +1,14 @@
-Dados no banco :
+Schema do banco:
 username
 name
 email
 password
 
 Rotas:
-/all = Mostra todos os users no banco
+/user/all = Mostra todos os users no banco
+/user/add = Cadastrar usuário
+/user/login = Logar usuário
+
+
 /hello = retorna um json simples
 / = html estático
