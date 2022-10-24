@@ -1,44 +1,55 @@
 const userService = require("../services/users/userService");
 const User = require("../models/Users");
-const bcrypt = require('bcrypt')
+const bcrypt = require("bcrypt");
 
 //exportar as classes das rotas
 module.exports = class UserController {
-
   static async createUser(req, res) {
+    //cadastro de usuário
 
-    var dados = req.body
-    
-    dados.password = await bcrypt.hash(dados.password, 8)
+    //checagem de email existente
+    const { email } = req.body;
+    const emailCheck = await User.findOne({ where: { email: email }});
+    if (emailCheck) {
+
+      res.json({
+        message: "Já existe este email cadastrado.",
+
+      })
+
+      return
+    } 
+
+    /*
+    const { usarname } = req.body;
+    const user = await User.findOne({ where: { usarname: usarname }});
+    if (user) {
+      res.json({
+        message: "Usuário já cadastrado",
+      });
+      return;
+    }
+    */
+
+    //inclusão do usuário
+    var dados = req.body;
+
+    dados.password = await bcrypt.hash(dados.password, 8);
 
     await User.create(dados)
       .then(() => {
         return res.json({
           erro: false,
-          message: "Usuário cadastrado com sucesso"
-        })
-      }).catch(() => {
+          message: "Usuário cadastrado com sucesso",
+        });
+      })
+      .catch(() => {
         return res.status(400).json({
           erro: true,
-          message: "Erro: Usuário não cadastrado com sucesso"
-        })
-      })
-      
- }
-
-
-  /*
-  static createUser(req, res) {
-    //retornando json fixo
-    const { name, username, email, password } = req.body;
-    userService.createUser(name, username, password, email);
-    return res.json({
-      status: "mimii,",
-    });
-  }*/
-
-
-
+          message: "Erro: Usuário não cadastrado com sucesso",
+        });
+      });
+  }
 
   static async login(req, res) {
     //retornando json fixo
@@ -56,17 +67,10 @@ module.exports = class UserController {
   }
 
   static async showUsers(req, res) {
-
     const users = await User.findAll({
-      attributes: ['username', 'name', 'email']
-    })
+      attributes: ["username", "name", "email"],
+    });
 
-    return res.json({ users })
+    return res.json({ users });
   }
-
-
-
-
-
 };
-
