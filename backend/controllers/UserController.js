@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 
 //exportar as classes das rotas
 module.exports = class UserController {
+
   static async createUser(req, res) {
     //cadastro de usuário
 
@@ -19,17 +20,6 @@ module.exports = class UserController {
 
       return
     } 
-
-    /*
-    const { usarname } = req.body;
-    const user = await User.findOne({ where: { usarname: usarname }});
-    if (user) {
-      res.json({
-        message: "Usuário já cadastrado",
-      });
-      return;
-    }
-    */
 
     //inclusão do usuário
     var dados = req.body;
