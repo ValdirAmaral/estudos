@@ -1,5 +1,6 @@
 const userService = require("../services/users/userService");
 const path = require("path");
+const User = require("../models/Users");
 
 //exportar as classes das rotas
 module.exports = class UserController {
@@ -25,5 +26,14 @@ module.exports = class UserController {
         user,
       });
     }
+  }
+
+  static async showUsers(req, res) {
+   
+    const users = await User.findAll({
+      attributes: ['username', 'name', 'email']
+    })
+
+    return res.json({users})
   }
 };
