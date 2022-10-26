@@ -1,4 +1,5 @@
 const User = require("../../models/Users.js"); //invocação do model
+const bcrypt = require("bcrypt");
 
 module.exports = class UserController {
   //------------------register----------------------
@@ -18,16 +19,17 @@ module.exports = class UserController {
 
   //-----------------------login----------------------------
   //find for username and password in database
-  static async login(username, password) {
-    const user = await User.findOne({
-      attributes: ["id", "name", "username", "email"],
+  static async loginUser(username, password) {
+   const user = await User.findOne({
+      attributes: ["id", "name", "username", "email", "password"],
       where: {
         username: username,
-        password: password,
+        password: password
       },
     });
-    return user;
+    return user
   }
+
   //----------------------------list------------------------------
   //list all users
   static async listAllUsers() {

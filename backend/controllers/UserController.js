@@ -1,5 +1,4 @@
 const userService = require("../services/users/userService");
-const User = require("../models/Users.js");
 const bcrypt = require("bcrypt");
 
 module.exports = class UserController {
@@ -34,14 +33,29 @@ module.exports = class UserController {
   //request username and password on body
   static async login(req, res) {
     const { username, password } = req.body;
-    const user = await userService.login(username, password);
-    if (user === null) {
-      return res.json({
-        error: "Usuário ou Senha inválidos",
+
+
+    //teste password --------------------------------------
+    const user = await userService.loginUser(username, password);
+
+    const passwordMath = bcrypt.compare(password, user.password)
+    if (!passwordMath) {
+      res.json({
+        message: "Senha incorreta."
+      })
+    }
+    //---------------------------------------------------
+
+
+    if (user) {
+      res.json({
+        message: "Logado com sucesso",
+        error: false
       });
     } else {
       return res.json({
-        user,
+        message: "Usuário não encontrado.",
+        error: true
       });
     }
   }
