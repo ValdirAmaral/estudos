@@ -18,6 +18,8 @@ module.exports = class UserController {
     var dataEntry = req.body;
 
     //password change with bcrypt
+    //essa parte do bcrypt pode ficar dentro do service, deixei um comentario lá
+    //a sintaxe pelo que to vendo ficou errada. 
     dataEntry.password = await bcrypt.hash(dataEntry.password, 8);
 
     console.log(dataEntry);
@@ -38,6 +40,8 @@ module.exports = class UserController {
     //teste password --------------------------------------
     const user = await userService.loginUser(username, password);
 
+    //essa parte do bcrypt pode ficar dentro do service, deixei um comentario lá
+    //a sintaxe pelo que to vendo ficou errada. 
     const passwordMath = bcrypt.compare(password, user.password)
     if (!passwordMath) {
       res.json({
