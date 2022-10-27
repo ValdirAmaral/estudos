@@ -1,5 +1,7 @@
-const User = require("../../models/Users.js"); //invocação do model
-const bcrypt = require("bcrypt");
+const User = require('../../models/Users.js'); //invocação do model
+const bcrypt = require('bcrypt');
+
+const PASSWORD_SALT = 10;
 
 module.exports = class UserController {
   //------------------register----------------------
@@ -9,10 +11,31 @@ module.exports = class UserController {
     return emailCheck;
   }
 
-  
   //create user
-  static async createUser(name, username, email, password) {
+  //
+  static async createUser__VELHO__APAGAR(name, username, email, password) {
     const userTypes = await User.create(name, username, email, password);
+    if (!userTypes) {
+      console.log(error);
+    }
+  }
+
+  static async createUser(name, username, email, password) {
+    //primeira treta era que a gente tava fazendo o hash errado, melhor usar assim;
+    //ele retorna o hash pra variavel;
+    let passwordHash = bcrypt.hashSync(password, PASSWORD_SALT);
+
+    //Repara na variavel de cima, vc ta passando 5 parametros pro user create
+    //a ideia é passar um objeto {} com todos os parametros dentro
+    // o trocando a senha pelo hash
+
+    const newUser = {
+      name: name,
+      username: username,
+      email: email,
+      password: passwordHash,
+    };
+    const userTypes = await User.create(newUser);
     if (!userTypes) {
       console.log(error);
     }
@@ -20,22 +43,25 @@ module.exports = class UserController {
 
   //-----------------------login----------------------------
   //find for username and password in database
-  static async loginUser(username, password) {
-   const user = await User.findOne({
-      attributes: ["id", "name", "username", "email", "password"],
+  static async loginUser(username,password) {
+    const user = await User.findOne({
+      attributes: ['id', 'name', 'username', 'email', 'password'],
       where: {
         username: username,
-        password: password
+        //password: password, não pode buscar por senha pq tem uma hash lá
       },
     });
-    return user
+
+     const passwordMatch = bcrypt.compareSync(password, user.password);
+
+     return passwordMatch;
   }
 
   //----------------------------list------------------------------
   //list all users
   static async listAllUsers() {
     const list = await User.findAll({
-      attributes: ["id", "name", "username", "email"],
+      attributes: ['id', 'name', 'username', 'email'],
     });
     return list;
   }
