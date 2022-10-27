@@ -1,5 +1,5 @@
-const userService = require("../services/users/userService");
-const bcrypt = require("bcrypt");
+const userService = require('../services/users/userService');
+const bcrypt = require('bcrypt');
 
 module.exports = class UserController {
   //-----------------------register --------------------------
@@ -9,7 +9,7 @@ module.exports = class UserController {
     const user = await userService.isUserExists(email);
     if (user) {
       return res.json({
-        message: "Email já existe.",
+        message: 'Email já existe.',
         error: true,
       });
     }
@@ -17,48 +17,44 @@ module.exports = class UserController {
     //request registration and successful response
     var dataEntry = req.body;
 
-    //password change with bcrypt
-    dataEntry.password = await bcrypt.hash(dataEntry.password, 8);
-
-    console.log(dataEntry);
-
-    await userService.createUser(dataEntry).then(() => {
-      res.json({
-        message: "Cadastro realizado com sucesso",
+    await userService
+      .createUser(
+        dataEntry.name,
+        dataEntry.username,
+        dataEntry.email,
+        dataEntry.password
+      )
+      .then(() => {
+        res.json({
+          message: 'Cadastro realizado com sucesso',
+        });
       });
-    });
   }
 
   //---------------------login-------------------------------
   //request username and password on body
+
   static async login(req, res) {
     const { username, password } = req.body;
 
-
     //teste password --------------------------------------
-    const user = await userService.loginUser(username, password);
+    const isLogged = await userService.loginUser(username, password);
 
-    const passwordMath = bcrypt.compare(password, user.password)
-    if (!passwordMath) {
+    if (isLogged) {
       res.json({
-        message: "Senha incorreta."
-      })
-    }
-    //---------------------------------------------------
-
-
-    if (user) {
-      res.json({
-        message: "Logado com sucesso",
-        error: false
+        message: 'Logado com sucesso',
+        error: false,
       });
     } else {
-      return res.json({
-        message: "Usuário não encontrado.",
-        error: true
+      res.json({
+        message: 'Usuário não encontrado.',
+        error: true,
       });
     }
+
+    return res;
   }
+
   //-------------------list-------------------------
   //respond all users json
   static async showUsers(req, res) {
