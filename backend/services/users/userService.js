@@ -9,6 +9,7 @@ module.exports = class UserController {
     return emailCheck;
   }
 
+  
   //create user
   static async createUser(name, username, email, password) {
     const userTypes = await User.create(name, username, email, password);
