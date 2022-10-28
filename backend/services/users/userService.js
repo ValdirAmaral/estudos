@@ -1,5 +1,7 @@
 const User = require('../../models/Users.js'); //invocação do model
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const config = require('../../config/auth.js')
 
 const PASSWORD_SALT = 10;
 
@@ -12,13 +14,7 @@ module.exports = class UserController {
   }
 
   //create user
-  //
-  static async createUser__VELHO__APAGAR(name, username, email, password) {
-    const userTypes = await User.create(name, username, email, password);
-    if (!userTypes) {
-      console.log(error);
-    }
-  }
+
 
   static async createUser(name, username, email, password) {
     //primeira treta era que a gente tava fazendo o hash errado, melhor usar assim;
@@ -53,8 +49,12 @@ module.exports = class UserController {
     });
 
      const passwordMatch = bcrypt.compareSync(password, user.password);
-
-     return passwordMatch;
+     if (passwordMatch) {
+      var token = jwt.sign({id: user.id}, config.secret, {expiresIn: config.expireIn})
+      console.log("Aqui tem que aparece o token", token)
+     }
+     return token
+     
   }
 
   //----------------------------list------------------------------

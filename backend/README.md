@@ -4,6 +4,8 @@ name
 email
 password
 
+secret: nodevue
+
 Rotas:
 /user/all = Mostra todos os users no banco
 /user/add = Cadastrar usuário

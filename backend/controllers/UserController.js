@@ -1,5 +1,5 @@
 const userService = require('../services/users/userService');
-const bcrypt = require('bcrypt');
+
 
 module.exports = class UserController {
   //-----------------------register --------------------------
@@ -40,10 +40,13 @@ module.exports = class UserController {
     //teste password --------------------------------------
     const isLogged = await userService.loginUser(username, password);
 
+    console.log("o que chega aqui?", isLogged)
+
     if (isLogged) {
       res.json({
         message: 'Logado com sucesso',
         error: false,
+        token: isLogged
       });
     } else {
       res.json({
