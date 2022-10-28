@@ -36,11 +36,10 @@ module.exports = class UserController {
 
   static async login(req, res) {
     const { username, password } = req.body;
-
+    
     //teste password --------------------------------------
     const isLogged = await userService.loginUser(username, password);
-
-    console.log("o que chega aqui?", isLogged)
+  
 
     if (isLogged) {
       res.json({
@@ -58,10 +57,25 @@ module.exports = class UserController {
     return res;
   }
 
+  static async verifyJWT (req, res) {
+    const token = req.headers.authorization.split('')[1]
+    const verifyJWTpass = await userService.verifyTest(token)
+
+    res.json({
+      error: false,
+      verifyJWTpass,
+    })
+
+    
+
+   }
+
+
   //-------------------list-------------------------
   //respond all users json
   static async showUsers(req, res) {
     const users = await userService.listAllUsers();
     return res.json({ users });
   }
+  
 };

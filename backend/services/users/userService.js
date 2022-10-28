@@ -1,7 +1,7 @@
-const User = require('../../models/Users.js'); //invocação do model
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const config = require('../../config/auth.js')
+const User = require("../../models/Users.js"); //invocação do model
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const config = require("../../config/auth.js");
 
 const PASSWORD_SALT = 10;
 
@@ -14,7 +14,6 @@ module.exports = class UserController {
   }
 
   //create user
-
 
   static async createUser(name, username, email, password) {
     //primeira treta era que a gente tava fazendo o hash errado, melhor usar assim;
@@ -39,29 +38,34 @@ module.exports = class UserController {
 
   //-----------------------login----------------------------
   //find for username and password in database
-  static async loginUser(username,password) {
+  static async loginUser(username, password) {
     const user = await User.findOne({
-      attributes: ['id', 'name', 'username', 'email', 'password'],
+      attributes: ["id", "name", "username", "email", "password"],
       where: {
         username: username,
         //password: password, não pode buscar por senha pq tem uma hash lá
       },
     });
 
-     const passwordMatch = bcrypt.compareSync(password, user.password);
-     if (passwordMatch) {
-      var token = jwt.sign({id: user.id}, config.secret, {expiresIn: config.expireIn})
-      console.log("Aqui tem que aparece o token", token)
-     }
-     return token
-     
+    const passwordMatch = bcrypt.compareSync(password, user.password);
+    if (passwordMatch) {
+      var token = jwt.sign({ id: user.id }, config.secret, {
+        expiresIn: config.expireIn,
+      });
+    }
+    return token;
   }
-
+  /* -----------------------VerifyJWT------------------------ */
+  static verifyTest(token) {
+    const headerAcess = token;
+    const decodedToken = jwt.verify(headerAcess, config.secret);
+    return decodedToken;
+  }
   //----------------------------list------------------------------
   //list all users
   static async listAllUsers() {
     const list = await User.findAll({
-      attributes: ['id', 'name', 'username', 'email'],
+      attributes: ["id", "name", "username", "email"],
     });
     return list;
   }
