@@ -1,5 +1,4 @@
-const userService = require('../services/users/userService');
-
+const userService = require("../services/users/userService");
 
 module.exports = class UserController {
   //-----------------------register --------------------------
@@ -9,7 +8,7 @@ module.exports = class UserController {
     const user = await userService.isUserExists(email);
     if (user) {
       return res.json({
-        message: 'Email já existe.',
+        message: "Email já existe.",
         error: true,
       });
     }
@@ -26,7 +25,7 @@ module.exports = class UserController {
       )
       .then(() => {
         res.json({
-          message: 'Cadastro realizado com sucesso',
+          message: "Cadastro realizado com sucesso",
         });
       });
   }
@@ -36,40 +35,36 @@ module.exports = class UserController {
 
   static async login(req, res) {
     const { username, password } = req.body;
-    
-    //teste password --------------------------------------
+
+    //função para o login do findOne
     const isLogged = await userService.loginUser(username, password);
-  
 
     if (isLogged) {
       res.json({
-        message: 'Logado com sucesso',
+        message: "Logado com sucesso",
         error: false,
-        token: isLogged
+        token: isLogged,
       });
     } else {
       res.json({
-        message: 'Usuário não encontrado.',
+        message: "Usuário não encontrado.",
         error: true,
       });
     }
 
     return res;
   }
-
-  static async verifyJWT (req, res) {
-    const token = req.headers.authorization.split('')[1]
-    const verifyJWTpass = await userService.verifyTest(token)
+  //----------------------JWT token---------------------------
+  static async acessAuth(req, res) {
+    const token = req.headers.authorization.split(" ")[1];
+    console.log("o header ta chamando aqui?", token);
+    const verifyJWTpass = await userService.verifyTest(token);
 
     res.json({
       error: false,
       verifyJWTpass,
-    })
-
-    
-
-   }
-
+    });
+  }
 
   //-------------------list-------------------------
   //respond all users json
@@ -77,5 +72,4 @@ module.exports = class UserController {
     const users = await userService.listAllUsers();
     return res.json({ users });
   }
-  
 };

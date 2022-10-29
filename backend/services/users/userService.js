@@ -2,7 +2,6 @@ const User = require("../../models/Users.js"); //invocação do model
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const config = require("../../config/auth.js");
-
 const PASSWORD_SALT = 10;
 
 module.exports = class UserController {
@@ -46,7 +45,7 @@ module.exports = class UserController {
         //password: password, não pode buscar por senha pq tem uma hash lá
       },
     });
-
+    //comparação de password criptografado e criação do token pelo id
     const passwordMatch = bcrypt.compareSync(password, user.password);
     if (passwordMatch) {
       var token = jwt.sign({ id: user.id }, config.secret, {
@@ -55,9 +54,10 @@ module.exports = class UserController {
     }
     return token;
   }
-  /* -----------------------VerifyJWT------------------------ */
+  //token para o headers usando o Bearer
   static verifyTest(token) {
     const headerAcess = token;
+    console.log("header no service?", headerAcess);
     const decodedToken = jwt.verify(headerAcess, config.secret);
     return decodedToken;
   }
